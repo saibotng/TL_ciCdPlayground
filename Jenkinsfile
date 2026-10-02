@@ -60,6 +60,10 @@ pipeline {
     post {
         always {
             junit allowEmptyResults: true, testResults: '**/reports/**/*.xml'
+            script {
+                currentBuild.displayName = "#${env.BUILD_NUMBER} built by TL"
+                currentBuild.description = 'Lorem ipsum'
+            }
         }
     }
 }
