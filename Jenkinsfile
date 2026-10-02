@@ -11,9 +11,21 @@ pipeline {
             }
         }
 
+        stage('unit tests') {
+            steps {
+                sh 'yarn test'
+            }
+        }
+
         stage('build') {
             steps {
                 sh 'yarn build'
+            }
+        }
+
+        stage('integration tests') {
+            steps {
+                sh 'yarn test:e2e'
             }
         }
 
@@ -41,6 +53,12 @@ pipeline {
                     profileName: 'role-based-access', 
                     userMetadata: []
             }
+        }
+    }
+
+    post {
+        always {
+            junit allowEmptyResults: true, testResults: 'reports/*.xml'
         }
     }
 }
