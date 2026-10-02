@@ -1,4 +1,5 @@
 pipeline {
+    environment { TERM = 'xterm'; NO_COLOR = '1' }
     agent any
     tools {
         nodejs 'yarn'
