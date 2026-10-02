@@ -35,3 +35,21 @@ jobs:
       if: always()
       with:
         files: '**/reports/**/*.xml'
+    - name: Upload site
+      if: github.ref == 'refs/heads/master'
+      uses: actions/upload-pages-artifact@v5
+      with:
+        path: public
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v5
